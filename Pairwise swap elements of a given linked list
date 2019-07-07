@@ -1,0 +1,84 @@
+
+/*
+Given a singly linked list, write a function to swap elements pairwise.
+
+For example, if the linked list is 1->2->3->4->5 then the function should change it to 2->1->4->3->5, and if the linked list is 1->2->3->4->5->6 then the function should change it to 2->1->4->3->6->5.
+
+
+*/
+/*
+METHOD 1 (Iterative) 
+Start from the head node and traverse the list. While traversing swap data of each node with its next node’s data.
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+struct Node* newNode(int key)
+{
+    struct Node* temp=(struct Node*)malloc(sizeof(struct Node));
+    temp->data=key;
+    temp->next=NULL;
+    return temp;
+}
+void swapNodes(struct Node* head)
+{
+   struct Node* start=head;
+   /* Traverse further only if  
+    there are at-least two nodes left */
+   while(start!=NULL && start->next!=NULL)
+   {
+   /* Swap data of node with  
+           its next node's data */
+       swap(start->data,start->next->data);
+       /* Move temp by 2 for the next pair */
+       start=start->next->next;
+   }
+    
+}
+void swap(int *a,int *b)
+{
+    int tmp=*a;
+    *a=*b;
+    *b=tmp;
+}
+void printList(struct Node* n)
+{
+    while(n!=NULL)
+    {
+        cout<<n->data<<" ";
+        n=n->next;
+    }
+}
+int main()
+{
+    struct Node *start = newNode(1); 
+    start->next = newNode(2); 
+    start->next->next = newNode(3); 
+    start->next->next->next = newNode(4); 
+    start->next->next->next->next = newNode(5); 
+    
+  
+    cout << "Linked list before calling swapNodes() ";  
+    printList(start);  
+  
+    swapNodes(start);  
+  
+    cout << "\nLinked list after calling swapNodes() ";  
+    printList(start);  
+  
+    return 0;  
+   
+}
+/*
+Output:
+Linked List before calling pairWiseSwap() 
+1 2 3 4 5 
+Linked List after calling pairWiseSwap() 
+2 1 4 3 5 
+Time complexity: O(n)
+*/
