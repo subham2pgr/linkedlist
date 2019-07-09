@@ -1,0 +1,145 @@
+/*
+Get count of the nodes in the first list, let count be c1.
+Get count of the nodes in the second list, let count be c2.
+Get the difference of counts d = abs(c1 – c2)
+Now traverse the bigger list from the first node till d nodes so that from here onwards both the lists have equal no of nodes.
+Then we can traverse both the lists in parallel till we come across a common node. (Note that getting a common node is done by comparing the address of the nodes)
+
+*/
+using namespace std;
+int getIntersectionPoint(int d,struct Node* list1,struct Node*list2);
+int getIntersection(struct Node* list1,struct Node* list2);
+
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+
+/*void push(struct Node** head_ref,int data)
+{
+    struct Node* temp_node=(struct Node*)malloc(sizeof(struct Node));
+    temp_node->data=data;
+    temp_node->next=(*head_ref);
+    (*head_ref)=temp_node;
+}*/
+int count(struct Node* head)
+{
+    int count=0;
+    while(head!=NULL)
+    {
+        count++;
+        head=head->next;
+    }
+    return count;
+    
+}
+/* function to get the intersection point of two linked  
+lists head1 and head2 where head1 has d more nodes than  
+head2 */
+int getIntersection(struct Node* list1,struct Node* list2)
+{
+// Count the number of nodes in 
+    // both the linked list 
+    int c1=count(list1);
+    int c2=count(list2);
+    int d;
+    // If first is greater
+    if(c1>c2)
+    {
+        d=c1-c2;
+        return getIntersectionPoint(d,list1,list2);
+    }
+    else
+    {
+        d=c2-c1;
+        return getIntersectionPoint(d,list2,list1);
+    }
+}
+/* function to get the intersection point of two linked  
+lists head1 and head2 where head1 has d more nodes than  
+head2 */
+int getIntersectionPoint(int d,struct Node* list1,struct Node*list2)
+{
+    struct Node* current1=list1;
+    struct Node* current2=list2;
+    // Stand at the starting of the bigger list 
+    // Move the pointer forward
+    for(int i=0;i<d;i++)
+    {
+        if(current1==NULL)
+         return -1;
+         current1=current1->next;
+    }
+     
+    // Move both pointers of both list till they 
+    // intersect with each other 
+    while(current1!=NULL && current2!=NULL)
+    {
+        if(current1==current2)
+           return current1->data;
+         
+         current1=current1->next;
+         current2=current2->next;
+         
+    }
+    return -1;
+    
+}
+int main()
+{
+    /*struct Node* list1=NULL;
+    struct Node* list2=NULL;
+    struct Node* list3=NULL;
+    /*  
+        Create two linked lists  
+      
+        1st 3->6->9->15->30  
+        2nd 10->15->30  
+      
+        15 is the intersection point  
+    */
+    push(&list1,30);
+    push(&list1,15);
+    push(&list1,9);
+    push(&list1,5);
+    push(&list1,3);
+    
+    push(&list2,30);
+    push(&list2,15);
+    push(&list2,10);*/
+    Node* newNode; 
+  //not working with push
+    // Addition of new nodes 
+    Node* head1 = new Node(); 
+    head1->data = 10; 
+  
+    Node* head2 = new Node(); 
+    head2->data = 3; 
+  
+    newNode = new Node(); 
+    newNode->data = 6; 
+    head2->next = newNode; 
+  
+    newNode = new Node(); 
+    newNode->data = 9; 
+    head2->next->next = newNode; 
+  
+    newNode = new Node(); 
+    newNode->data = 15; 
+    head1->next = newNode; 
+    head2->next->next->next = newNode; 
+  
+    newNode = new Node(); 
+    newNode->data = 30; 
+    head1->next->next = newNode; 
+  
+    head1->next->next->next = NULL; 
+  
+
+    
+    cout << "The node of intersection is " << getIntersection(head1,head2);
+    
+    return 0;
+    
+}
