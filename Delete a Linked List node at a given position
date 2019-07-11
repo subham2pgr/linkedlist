@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+struct Node
+{
+   int data;
+   struct Node* next;
+};
+void push(struct Node** head_ref,int data)
+{
+    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node)); 
+    new_node->data  = data; 
+    new_node->next = (*head_ref); 
+    (*head_ref)    = new_node; 
+}
+void deletePosition(struct Node** head_ref,int position)
+{
+// If linked list is empty
+    if(*head_ref==NULL)
+      return;
+       // Store head node
+      struct Node* temp=*head_ref;
+      // If head needs to be removed 
+      if(position==0)
+      {
+          *head_ref=temp->next;// Change head 
+                    // free old head
+          free(temp);
+          return;
+      }
+      // Find previous node of the node to be deleted 
+      for(int i=0;temp!=NULL && i<position-1;i++)
+      {
+          temp=temp->next;
+      }
+      // If position is more than number of ndoes 
+      if(temp==NULL || temp->next==NULL)
+      {
+          return;
+          
+      }
+      // Node temp->next is the node to be deleted 
+    // Store pointer to the next of node to be deleted 
+      struct Node* next=temp->next->next;
+      free(temp->next);
+      temp->next=next;
+}
+void printList(struct Node *node) 
+{ 
+    while (node != NULL) 
+    { 
+        cout<<node->data;
+        node = node->next; 
+    } 
+} 
+int main(void){
+    // Your code here!
+    struct Node* head = NULL; 
+  
+    push(&head, 7); 
+    push(&head, 1); 
+    push(&head, 3); 
+    push(&head, 2); 
+    push(&head, 8); 
+     printList(head);
+     
+    deletePosition(&head, 4); 
+    puts("\nLinked List after Deletion at position 4: "); 
+    printList(head); 
+    return 0; 
+    
+}
