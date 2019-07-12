@@ -1,0 +1,72 @@
+#include <iostream>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+void push(struct Node** head_ref,int data)
+{
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node*));
+    newNode->data=data;
+    newNode->next=(*head_ref);
+    (*head_ref)=newNode;
+}
+void deleteNode(struct Node* head)
+{
+    if(head==NULL)
+    return;
+    
+      /* Initialize prev and node to be deleted */
+    struct Node* prev=head;
+    struct Node* node=head->next;
+    while(prev!=NULL && node!=NULL)
+    {
+    /* Change next link of previous node */
+        prev->next=node->next;
+        /* Free memory */
+        free(node);
+        /* Update prev and node */
+        prev=prev->next;
+        if(prev!=NULL)
+        {
+            node=prev->next;
+        }
+    }
+}
+
+
+    void printList(Node *node)  
+{  
+    while (node != NULL)  
+    {  
+        cout<< node->data<<" ";  
+        node = node->next;  
+    }  
+}  
+  
+/* Driver code */
+int main()  
+{  
+    /* Start with the empty list */
+    Node* head = NULL;  
+  
+    /* Using push() to construct below list  
+    1->2->3->4->5 */
+    push(&head, 5);  
+    push(&head, 4);  
+    push(&head, 3);  
+    push(&head, 2);  
+    push(&head, 1);  
+  
+    cout<<"List before calling deleteAlt() \n";  
+    printList(head);  
+  
+    deleteNode(head);  
+  
+    cout<<"\nList after calling deleteAlt() \n";  
+    printList(head);  
+  
+    return 0;  
+} 
