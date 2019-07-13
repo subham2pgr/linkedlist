@@ -1,0 +1,77 @@
+//Doesnt work with single *(weird result) use **
+#include <iostream>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+void rotate(struct Node** head,int k)
+{
+    if (k == 0)  
+    return; 
+    struct Node* curr=*head;
+    int count;
+    for(count=1;count<k && curr!=NULL;count++)
+    {
+        curr=curr->next;
+    }
+    if(curr==NULL)
+     return;
+    struct Node* kthNode=curr;
+    while(curr->next!=NULL)
+    {
+        curr=curr->next;
+    }
+    curr->next=*head;
+    *head=kthNode->next;
+    kthNode->next=NULL;
+    
+}
+
+
+    void push (Node** head_ref, int new_data)  
+{  
+    /* allocate node */
+    Node* new_node = new Node(); 
+  
+    /* put in the data */
+    new_node->data = new_data;  
+  
+    /* link the old list off the new node */
+    new_node->next = (*head_ref);  
+  
+    /* move the head to point to the new node */
+    (*head_ref) = new_node;  
+}  
+  
+/* Function to print linked list */
+void printList(Node *node)  
+{  
+    while (node != NULL)  
+    {  
+        cout << node->data << " ";  
+        node = node->next;  
+    }  
+}  
+  
+/* Driver code*/
+int main(void)  
+{  
+    /* Start with the empty list */
+    Node* head = NULL;  
+  
+    // create a list 10->20->30->40->50->60  
+    for (int i = 60; i > 0; i -= 10)  
+        push(&head, i);  
+  
+    cout << "Given linked list \n";  
+    printList(head);  
+    rotate(&head, 4);  
+  
+    cout << "\nRotated Linked list \n";  
+    printList(head);  
+  
+    return (0);  
+}
