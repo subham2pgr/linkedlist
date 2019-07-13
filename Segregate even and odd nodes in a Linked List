@@ -1,0 +1,111 @@
+
+//youtube video https://www.youtube.com/watch?v=gmfi2NMJJmc
+#include <iostream>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+struct Node* segregateEvenOdd(struct Node* head)
+{
+    struct Node* evenHead=NULL;
+    struct Node* oddHead=NULL;
+    struct Node* lastEven=NULL;
+    struct Node* lastOdd=NULL;
+    struct Node* curr=head;
+    while(curr!=NULL)
+    {
+        if(curr->data%2==0)
+        {
+            if(evenHead==NULL)
+            {
+                evenHead=lastEven=curr;
+            }
+            else
+            {
+                lastEven->next=curr;
+                lastEven=curr;
+            }
+        }
+        else
+        {
+            if(oddHead==NULL)
+            {
+                oddHead=lastOdd=curr;
+            }
+            else
+            {
+                lastOdd->next=curr;
+                lastOdd=curr;
+            }
+        }
+        curr=curr->next;
+    }
+    if(evenHead!=NULL)
+    {
+       head=evenHead; 
+    }
+    if(lastEven!=NULL)
+    {
+        lastEven->next=oddHead;
+    }
+    if(lastOdd!=NULL)
+    {
+        lastOdd->next=NULL;
+    }
+    return head;
+}
+void push(Node** head_ref, int new_data)  
+{  
+    /* allocate node */
+    Node* new_node = new Node(); 
+  
+    /* put in the data */
+    new_node->data = new_data;  
+  
+    /* link the old list off the new node */
+    new_node->next = (*head_ref);  
+  
+    /* move the head to point to the new node */
+    (*head_ref) = new_node;  
+}  
+  
+/* Function to print nodes in a given linked list */
+void printList(Node *node)  
+{  
+    while (node != NULL)  
+    {  
+        cout << node->data <<" ";  
+        node = node->next;  
+    }  
+}  
+  
+/* Driver code*/
+int main()  
+{  
+    /* Start with the empty list */
+    struct Node* head = NULL;  
+  
+    /* Let us create a sample linked list as following  
+    0->2->4->6->8->10->11 */
+  
+    push(&head, 8);  
+    push(&head, 6);  
+    push(&head, 4);  
+    push(&head, 3);  
+    push(&head, 2);  
+    push(&head, 1);  
+      
+  
+    cout << "Original Linked list ";  
+    printList(head);  
+  
+    struct Node* list=segregateEvenOdd(head);  
+  
+    cout << "\nModified Linked list ";  
+    printList(list);  
+  
+    return 0;  
+} 
