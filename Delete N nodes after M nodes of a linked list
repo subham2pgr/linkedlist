@@ -1,0 +1,86 @@
+#include <iostream>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+void skipMdeleteN(struct Node* head,int M,int N)
+{
+   int count;
+   struct Node* t;
+   struct Node* curr=head;
+   while(curr)
+   {
+   for(count=1;count<M && curr!=NULL;count++)
+   {
+       curr=curr->next;
+   }
+   t=curr->next;
+   for(count=1;count<=N && t!=NULL;count++)
+   {
+       struct Node* temp=t;
+       t=t->next;
+       free(temp);
+   }
+   curr->next=t;
+   curr=t;
+   }
+      
+}
+  
+  
+void push(Node** head_ref, int new_data)  
+{  
+    /* allocate node */
+    Node* new_node = new Node(); 
+  
+    /* put in the data */
+    new_node->data = new_data;  
+  
+    /* link the old list off the new node */
+    new_node->next = (*head_ref);  
+  
+    /* move the head to point to the new node */
+    (*head_ref) = new_node;  
+}  
+  
+/* Function to print nodes in a given linked list */
+void printList(Node *node)  
+{  
+    while (node != NULL)  
+    {  
+        cout << node->data <<" ";  
+        node = node->next;  
+    }  
+}  
+  
+/* Driver code*/
+int main()  
+{  
+    /* Create following linked list  
+    1->2->3->4->5->6->7->8->9->10 */
+    Node* head = NULL;  
+    int M=2, N=3;  
+    push(&head, 10);  
+    push(&head, 9);  
+    push(&head, 8);  
+    push(&head, 7);  
+    push(&head, 6);  
+    push(&head, 5);  
+    push(&head, 4);  
+    push(&head, 3);  
+    push(&head, 2);  
+    push(&head, 1);  
+  
+    cout << "M = " << M<< " N = " << N << "\nGiven Linked list is :\n";  
+    printList(head);  
+  
+    skipMdeleteN(head, M, N);  
+  
+    cout<<"\nLinked list after deletion is :\n";  
+    printList(head);  
+  
+    return 0;  
+} 
